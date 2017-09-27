@@ -3,6 +3,11 @@ import { Config } from 'angular-ecmascript/module-helpers';
 import chatsTemplateUrl from '../templates/chats.html';
 import tabsTemplateUrl from '../templates/tabs.html';
  
+
+// Config predefines properties stateProvider and urlRouterProvider
+// the config here further extends and builds on it to get desired
+// functionality.
+
 export default class RoutesConfig extends Config {
     configure() {
         this.$stateProvider

@@ -1,52 +1,24 @@
 import Moment from 'moment';
 import { Controller } from 'angular-ecmascript/module-helpers';
+
+// Chats is the mongo collection that contains all the messages
+import { Chats } from '../../../lib/collections';
  
 export default class ChatsCtrl extends Controller {
     constructor() {
            super(...arguments);
-           this.data = [
-            {
-                _id: 0,
-                name: 'Ethan Gonzalez',
-                picture: 'https://randomuser.me/api/portraits/thumb/men/1.jpg',
-                lastMessage: {
-                    text: 'You on your way?',
-                    timestamp: Moment().subtract(1, 'hours').toDate()
-                }
-            },
-            {
-                _id: 1,
-                name: 'Bryan Wallace',
-                picture: 'https://randomuser.me/api/portraits/thumb/lego/1.jpg',
-                lastMessage: {
-                    text: 'Hey, it\'s me',
-                    timestamp: Moment().subtract(2, 'hours').toDate()
-                }
-            },
-            {
-                _id: 2,
-                 name: 'Avery Stewart',
-                 picture: 'https://randomuser.me/api/portraits/thumb/women/1.jpg',
-                 lastMessage: {
-                    text: 'I should buy a boat',
-                    timestamp: Moment().subtract(1, 'days').toDate()
-                }
-            },
-            {
-                _id: 3,
-                name: 'Katie Peterson',
-                picture: 'https://randomuser.me/api/portraits/thumb/women/2.jpg',
-                lastMessage: {
-                    text: 'Look at my mukluks!',
-                    timestamp: Moment().subtract(4, 'days').toDate()
-                }
-            },
-           ];
+
+           // we provide a helper that returns chat messages from the chat databsae in lib/collections
+           this.helpers({
+             data() {
+               return Chats.find();
+             }
+           });
     }
 
     // deletes this chat entry
     remove(chat) {
-        this.data.splice(this.data.indexOf(chat),1);
+        Chats.remove(chat._id);
     }
 }
  
