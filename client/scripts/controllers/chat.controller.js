@@ -20,6 +20,20 @@ export default class ChatCtrl extends Controller {
         return Chats.findOne(this.chatId);
       }
     });
+    
+    // set up autoscrolling for this view in the controller
+    this.autoScroll();
+  }
+
+  autoScroll() {
+     let recentMessagesNum=this.messages.length;
+
+     this.autorun(() => {
+       const currMessagesNum = this.getCollectionReactively('messages').length;
+       const animate=recentMessagesNum != currMessagesNum;
+       recentMessagesNum=currMessagesNum;
+       this.scrollBottom(animate);
+     });
   }
   
   sendMessage() {
